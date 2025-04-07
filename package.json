@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Cortzhrt/cypressmastery/issues"
   },
-  "homepage": "https://github.com/Cortzhrt/cypressmastery#readme"
+  "homepage": "https://github.com/Cortzhrt/cypressmastery#readme",
+  "dependencies": {
+    "cypress": "^14.2.1"
+  }
 }
