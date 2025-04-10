@@ -62,4 +62,10 @@ Cypress.Commands.add('auth', (username, password) => {
   Cypress.Commands.add('screenshotCheckout', () => {
     cy.screenshot('CheckOut', { capture: 'fullPage' });
   });
-  
+
+  //Custom Command for the registration.cy.js function on logout
+  Cypress.Commands.add('LogInFunction',()=> {
+    cy.get('input[name="username"]').type('JohnDoe1')
+    cy.get('input[name="password"]').type('Henson_rule34')
+    cy.get(':nth-child(5) > .button').click()
+  })  
