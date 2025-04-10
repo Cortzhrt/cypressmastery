@@ -9,9 +9,10 @@ describe('E-Commerce Test Flow/Workflow', () => {
     cy.url().should('include', '/inventory.html');
     cy.get('.inventory_list').should('be.visible').log('Inventory list is visible');  // Added log for debugging
 
-    // Take a screenshot with the current date
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
-    cy.screenshot(`Login_${currentDate}`, { capture: 'fullPage' });
+    // Take a screenshot with the current date in mm/dd/yy format
+    const currentDate = new Date();
+    const formattedDate = new Intl.DateTimeFormat('en-US').format(currentDate).replace(/\//g, '-'); // Format as mm/dd/yy
+    cy.screenshot(`Login_${formattedDate}`, { capture: 'fullPage' });
   });
 
   it('Should successfully add to cart', () => {
@@ -19,9 +20,10 @@ describe('E-Commerce Test Flow/Workflow', () => {
     cy.addToCart('sauce-labs-backpack');
     cy.verifyCart();
 
-    // Take a screenshot with the current date
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
-    cy.screenshot(`AddToCart_${currentDate}`, { capture: 'fullPage' });
+    // Take a screenshot with the current date in mm/dd/yy format
+    const currentDate = new Date();
+    const formattedDate = new Intl.DateTimeFormat('en-US').format(currentDate).replace(/\//g, '-'); // Format as mm/dd/yy
+    cy.screenshot(`AddToCart_${formattedDate}`, { capture: 'fullPage' });
   });
 
   it('Should proceed to Checkout', () => {
@@ -29,9 +31,10 @@ describe('E-Commerce Test Flow/Workflow', () => {
     cy.get('.shopping_cart_link').click();
     cy.proceedToCheckout('John', 'Doe', '1234');
 
-    // Take a screenshot with the current date
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
-    cy.screenshot(`Checkout_${currentDate}`, { capture: 'fullPage' });
+    // Take a screenshot with the current date in mm/dd/yy format
+    const currentDate = new Date();
+    const formattedDate = new Intl.DateTimeFormat('en-US').format(currentDate).replace(/\//g, '-'); // Format as mm/dd/yy
+    cy.screenshot(`Checkout_${formattedDate}`, { capture: 'fullPage' });
 
     cy.get('[data-test="back-to-products"]').click();
   });
