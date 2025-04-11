@@ -24,8 +24,6 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 // cypress/support/commands.js
-const userName = 'JohnDoe1'
-const passWord = 'Henson_rule34'
 
 // Custom Command to log in
 Cypress.Commands.add('auth', (username, password) => {
@@ -65,6 +63,42 @@ Cypress.Commands.add('auth', (username, password) => {
     cy.screenshot('CheckOut', { capture: 'fullPage' });
   });
 
+  //4-10-2025
+  //NEW ACTIVITY COMMANDS
+  //USED IN REGISTRATION.CY.JS
+
+  import { faker } from '@faker-js/faker';  // Import Faker.js
+
+  Cypress.Commands.add('generateData' , () => {
+    let testData = generateTestData()
+    cy.writeFile('cypress/fixtures/testData.json', testData);
+  });
+   
+
+
+export const generateTestData = () => {
+
+    let userNameString = faker.person.firstName()
+    let userNameNumeric = faker.string.numeric(4)
+    let userName = userNameString + userNameNumeric;
+
+    return {
+      firstName: userNameString,
+      lastName: faker.person.lastName(),
+      email: faker.internet.email(),
+      phone: faker.string.numeric(11),
+      ssn: faker.string.numeric(9), // Example SSN as UUID
+      username: userName,
+      password: faker.internet.password(),
+      confirmPassword: faker.internet.password(),
+      address: faker.location.streetAddress(),
+      city: faker.location.city(),
+      state: faker.location.state(),
+      zip: faker.location.zipCode()
+    };
+  };
+
+  /*
   Cypress.Commands.add('RegisterFunction', ()=> {
     cy.get('input[id="customer.firstName"]').type('John')
     cy.get('input[id="customer.lastName"]').type('Doe')
@@ -79,9 +113,22 @@ Cypress.Commands.add('auth', (username, password) => {
     cy.get('input[id="repeatedPassword"]').type(passWord)
     cy.get('[colspan="2"] > .button').click();
   })
+
+  */
+
   //Custom Command for the registration.cy.js function on logout
-  Cypress.Commands.add('LogInFunction',()=> {
-    cy.get('input[name="username"]').type(userName)
-    cy.get('input[name="password"]').type(passWord)
-    cy.get(':nth-child(5) > .button').click()
-  })  
+  Cypress.Commands.add('LogInFunction', () => {
+    cy.fixture('testData.json').then((data) => {
+      cy.get('input[name="username"]').type(data.username);
+      cy.get('input[name="password"]').type(data.password);
+      cy.get(':nth-child(5) > .button').click();
+    });
+  });
+
+  Cypress.Commands.add('AdminClear', () => {
+
+    cy.get('tr > :nth-child(2) > .button').click()
+    cy.get('button[value="CLEAN"]').click()
+
+
+  })
