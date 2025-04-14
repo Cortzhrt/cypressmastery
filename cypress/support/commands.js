@@ -69,10 +69,7 @@ Cypress.Commands.add('auth', (username, password) => {
 
   import { faker } from '@faker-js/faker';  // Import Faker.js
 
-  Cypress.Commands.add('generateData' , () => {
-    let testData = generateTestData()
-    cy.writeFile('cypress/fixtures/testData.json', testData);
-  });
+
    
 
 
@@ -94,9 +91,14 @@ export const generateTestData = () => {
       address: faker.location.streetAddress(),
       city: faker.location.city(),
       state: faker.location.state(),
-      zip: faker.location.zipCode()
+      zip: faker.location.zipCode(),
+      birthmonth : faker.date.month(),
+      birthday: faker.number.int({min: 1, max: 31}),
+      birthyear : faker.number.int({min:1970, max:2010}),
+      card : faker.finance.accountNumber()
     };
-  };
+  }; 
+
 
   /*
   Cypress.Commands.add('RegisterFunction', ()=> {
@@ -116,6 +118,8 @@ export const generateTestData = () => {
 
   */
 
+
+
   //Custom Command for the registration.cy.js function on logout
   Cypress.Commands.add('LogInFunction', () => {
     cy.fixture('testData.json').then((data) => {
@@ -131,4 +135,128 @@ export const generateTestData = () => {
     cy.get('button[value="CLEAN"]').click()
 
 
+  })
+
+  //NEW COMMANDS FOR SAUCE DEMO 4-11-25
+
+  // Log in to SauceDemo with standard credentials
+Cypress.Commands.add('authSauceDemo', () => {
+  cy.get('[data-test="username"]').type('standard_user');
+  cy.get('[data-test="password"]').type('secret_sauce');
+  cy.get('[data-test="login-button"]').click();
+});
+
+Cypress.Commands.add('saveCart', () => {
+  cy.window().then((win) => {
+    const cart = win.localStorage.getItem('cart-contents') || '[]';
+    Cypress.env('savedCart', cart);
+  });
+});
+
+Cypress.Commands.add('restoreCart', () => {
+  const cart = Cypress.env('savedCart') || '[]';
+  cy.window().then((win) => {
+    win.localStorage.setItem('cart-contents', cart);
+  });
+});
+
+// NEW COMMANDS FOR THE AUTOMATION EXERCISE ACTIVITY
+
+Cypress.Commands.add ('checkCartAE',() =>{
+
+  cy.get('.features_items > :nth-child(3) > .product-image-wrapper > .single-products > .productinfo > .btn').click()
+  cy.get('.modal-footer > .btn').click()
+  cy.get('.shop-menu > .nav > :nth-child(3) > a').click()
+  cy.get('.cart_quantity').should('not.be', "0")
+  cy.get('.col-sm-6 > .btn').click()
+  cy.get('.modal-body > :nth-child(2) > a > u').click()
+
+})
+
+Cypress.Commands.add ('accountRegistrationAE', () => {
+
+  cy.get('[data-qa="signup-name"]').type('John Doughnut')
+  cy.get('[data-qa="signup-email"]').type('johndoughnut1@gmail.com')
+  cy.get('[data-qa="signup-button"]').click()
+  cy.get('#id_gender1').click()
+  cy.get('[data-qa="password"]').type('Holalolazola1!')
+  cy.get('[data-qa="days"]').select('12')
+  cy.get('[data-qa="months"]').select('January')
+  cy.get('[data-qa="years"]').select('1992')
+  cy.get('[data-qa="first_name"]').type('John')
+  cy.get('[data-qa="last_name"]').type('Doughnut')
+  cy.get('[data-qa="company"]').type('Metrocampbankco')
+  cy.get('[data-qa="address"]').type('rebengga')
+  cy.get('[data-qa="country"]').select('Canada')
+  cy.get('[data-qa="state"]').type('united')
+  cy.get('[data-qa="city"]').type('femboi city')
+  cy.get('[data-qa="zipcode"]').type('1243')
+  cy.get('[data-qa="mobile_number"]').type('12345678912')
+  cy.get('[data-qa="create-account"]').click()
+
+
+})
+
+// Cypress.Commands.add('generateData' , () => {
+//   let testData = generateTestData()
+//   cy.writeFile('cypress/fixtures/automation_exercise.json', testData);
+// });
+ 
+
+
+Cypress.Commands.add('generateData' , () => {
+  let testData = generateTestData()
+  cy.writeFile('cypress/fixtures/testData.json', testData);
+});
+
+Cypress.Commands.add('userLoginAE', ()=> {
+  cy.readFile('cypress/fixtures/testData.json').then((user)=>{
+    cy.get('input[type="email"][data-qa="login-email"][name="email"]').type(user.email)
+    cy.get('input[data-qa="login-password"]').type(user.password)
+    cy.get('[data-qa="login-button"]').click()
+
+  })
+})
+
+Cypress.Commands.add('UserRegistrationAE', () => {
+
+  cy.fixture('testData.json').then((user) =>{
+  cy.get('[data-qa="signup-name"]').should('have.value', '').type(user.firstName);
+  cy.get('[data-qa="signup-email"]').should('have.value', '').type(user.email);
+  cy.get('[data-qa="signup-button"]').click()
+
+  cy.get('[data-qa="password"]').should('have.value', '').type(user.password);
+  cy.get('[data-qa="days"]').select(user.birthday);
+  cy.get('[data-qa="months"]').select(user.birthmonth);
+  cy.get('[data-qa="years"]').select('2006');
+  cy.get('[data-qa="first_name"]').should('have.value', '').type(user.firstName);
+  cy.get('[data-qa="last_name"]').should('have.value', '').type(user.lastName)
+  cy.get('[data-qa="company"]').type('Jeonsoft')
+  cy.get('[data-qa="address"]').should('have.value', '').type(user.address)
+  cy.get('[data-qa="country"]').select('India')
+  cy.get('[data-qa="state"]').should('have.value', '').type(user.state)
+  cy.get('[data-qa="city"]').should('have.value', '').type(user.city)
+  cy.get('[data-qa="zipcode"]').should('have.value', '').type(user.zip)
+  cy.get('[data-qa="mobile_number"]').should('have.value', '').type(user.phone)
+        
+  cy.get('[data-qa="create-account"]').click()
+  cy.get('[data-qa="continue-button"]').click()
+  cy.get('.shop-menu > .nav > :nth-child(3) > a').click()
+      })
+    })
+
+  Cypress.Commands.add('checkOutAE', () => {
+      cy.readFile('cypress/fixtures/testData.json').then ((user) => {
+        cy.get('.form-control').type('Testing testing 123.')
+        cy.get(':nth-child(7) > .btn').click()
+        cy.get('[data-qa="name-on-card"]').type(user.firstName + ' ' + user.lastName)
+        cy.get('[data-qa="card-number"]').type(user.card)
+        cy.get('[data-qa="cvc"]').type('325')
+        cy.get('[data-qa="expiry-month"]').type('09')
+        cy.get('[data-qa="expiry-year"]').type('2028')
+        cy.get('[data-qa="pay-button"]').click()
+        cy.get('.col-sm-9 > .btn-default').click()
+        cy.get('[data-qa="continue-button"]').click()
+
+        })
   })
