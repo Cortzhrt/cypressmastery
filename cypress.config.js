@@ -6,6 +6,17 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
+
+      const { beforeRunHook, afterRunHook } = require('cypress-mochawesome-reporter/lib');
+on('before:run', async (details) => {
+        console.log('override before:run');
+        console.log('Running tests');
+        await beforeRunHook(details);
+      });
+      on('after:run', async () => {
+        console.log('override after:run');
+        await afterRunHook();
+      });
     },
   },
 });

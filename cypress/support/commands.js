@@ -260,3 +260,11 @@ Cypress.Commands.add('UserRegistrationAE', () => {
 
         })
   })
+
+  Cypress.Commands.add('fillRegistrationForm', (customerData = generateCustomerData()) => {
+    RegistrationPage.fillSignUpForm(customerData);
+    RegistrationPage.submitSignUpForm();
+    RegistrationPage.verifySignUpSuccess(customerData.username);
+  });
+
+  import RegistrationPage from './pages/registration.page';

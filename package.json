@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "login-test": "npx cypress run  --record --key 3f54f3ba-54d3-41ff-a63b-f5bdce64a2b5 --spec 'cypress/e2e/login.cy.js' --browser chrome",
-    "ecom-test": "npx cypress run  --record --key 3f54f3ba-54d3-41ff-a63b-f5bdce64a2b5 --spec 'cypress/e2e/ecomflow.cy.js' --browser chrome"
+    "ecom-test": "npx cypress run  --record --key 3f54f3ba-54d3-41ff-a63b-f5bdce64a2b5 --spec 'cypress/e2e/ecomflow.cy.js' --browser chrome",
+    "testcase-activity": "npx cypress run  --record --key 3f54f3ba-54d3-41ff-a63b-f5bdce64a2b5 --spec 'cypress/e2e/test-case-14.cy.js' --browser chrome"
   },
   "repository": {
     "type": "git",
