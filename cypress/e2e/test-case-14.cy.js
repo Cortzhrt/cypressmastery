@@ -77,5 +77,5 @@ beforeEach(() => {
       cy.get('[data-qa="continue-button"]').click
       const currentDate = new Date();
       const formattedDate = new Intl.DateTimeFormat('en-US').format(currentDate).replace(/\//g, '-'); // Format as mm/dd/yy
-      cy.screenshot(`Login_${formattedDate}`, { capture: 'fullPage' });
+      cy.screenshot(`Delete account screenshot_${formattedDate}`, { capture: 'fullPage' });
   })
