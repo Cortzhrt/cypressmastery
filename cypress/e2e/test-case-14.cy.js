@@ -42,6 +42,9 @@ beforeEach(() => {
     })
 
         cy.get('[data-qa="create-account"]').click()
+        const currentDate = new Date();
+        const formattedDate = new Intl.DateTimeFormat('en-US').format(currentDate).replace(/\//g, '-'); // Format as mm/dd/yy
+        cy.screenshot(`Account_Creation_${formattedDate}`, { capture: 'fullPage' });
         cy.get('[data-qa="continue-button"]').click()
         cy.get('.shop-menu > .nav > :nth-child(3) > a').click()
 
@@ -64,6 +67,9 @@ beforeEach(() => {
         cy.get('[data-qa="expiry-year"]').type('2028')
         cy.get('[data-qa="pay-button"]').click()
         cy.get('.col-sm-9 > .btn-default').click()
+        const currentDate = new Date();
+        const formattedDate = new Intl.DateTimeFormat('en-US').format(currentDate).replace(/\//g, '-'); // Format as mm/dd/yy
+        cy.screenshot(`Checkout_${formattedDate}`, { capture: 'fullPage' });
         cy.get('[data-qa="continue-button"]').click()
       })
       
