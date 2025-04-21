@@ -25,6 +25,9 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 // cypress/support/commands.js
 
+import {generateTestData} from "../support/util.js"
+import RegistrationPage from './pages/registration.page.js';
+
 // Custom Command to log in
 Cypress.Commands.add('auth', (username, password) => {
     cy.visit('https://www.saucedemo.com/');
@@ -66,40 +69,6 @@ Cypress.Commands.add('auth', (username, password) => {
   //4-10-2025
   //NEW ACTIVITY COMMANDS
   //USED IN REGISTRATION.CY.JS
-
-  import { faker } from '@faker-js/faker';  // Import Faker.js
-
-
-   
-
-
-export const generateTestData = () => {
-
-    let userNameString = faker.person.firstName()
-    let userNameNumeric = faker.string.numeric(4)
-    let userName = userNameString + userNameNumeric;
-
-    return {
-      firstName: userNameString,
-      lastName: faker.person.lastName(),
-      email: faker.internet.email(),
-      phone: faker.string.numeric(11),
-      ssn: faker.string.numeric(9), // Example SSN as UUID
-      username: userName,
-      password: faker.internet.password(),
-      confirmPassword: faker.internet.password(),
-      address: faker.location.streetAddress(),
-      city: faker.location.city(),
-      state: faker.location.state(),
-      zip: faker.location.zipCode(),
-      birthmonth : faker.date.month(),
-      birthday: faker.number.int({min: 1, max: 31}),
-      birthyear : faker.number.int({min:1970, max:2010}),
-      card : faker.finance.accountNumber()
-    };
-  }; 
-
-
   /*
   Cypress.Commands.add('RegisterFunction', ()=> {
     cy.get('input[id="customer.firstName"]').type('John')
@@ -261,10 +230,8 @@ Cypress.Commands.add('UserRegistrationAE', () => {
         })
   })
 
-  Cypress.Commands.add('fillRegistrationForm', (customerData = generateCustomerData()) => {
+  Cypress.Commands.add('fillRegistrationForm', (customerData = generateTestData()) => {
     RegistrationPage.fillSignUpForm(customerData);
     RegistrationPage.submitSignUpForm();
     RegistrationPage.verifySignUpSuccess(customerData.username);
   });
-
-  import RegistrationPage from './pages/registration.page';
