@@ -17,3 +17,5 @@
 import './commands'
 
 import 'cypress-mochawesome-reporter/register'
+import 'cypress-plugin-api';
+import 'cypress-wait-until';

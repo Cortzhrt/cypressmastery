@@ -23,10 +23,13 @@
   },
   "homepage": "https://github.com/Cortzhrt/cypressmastery#readme",
   "dependencies": {
-    "cypress": "^14.2.1"
+    "cypress": "^14.3.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.6.0",
-    "cypress-mochawesome-reporter": "^3.8.2"
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "cypress-plugin-api": "^2.11.2",
+    "cypress-wait-until": "^3.0.2",
+    "dotenv": "^16.5.0"
   }
 }

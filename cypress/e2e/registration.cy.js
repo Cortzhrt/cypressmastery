@@ -9,4 +9,9 @@ describe('Parabank Registration', () => {
         cy.fillRegistrationForm()
     });
 
+    it("Should ", () => {
+        cy.contains('a', 'home').click()
+        cy.get('input.button')
+    })
+
 });
