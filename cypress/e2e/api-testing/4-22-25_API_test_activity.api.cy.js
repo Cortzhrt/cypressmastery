@@ -12,13 +12,13 @@ describe('Store API Tests', () => {
   it('GET - Get store inventory', () => {
     cy.api({
       method: 'GET',
-      url: '/store/inventory', // The inventory endpoint
+      url: '/store/inventory',
       headers: {
-        accept: 'application/json', // Matching the cURL -H 'accept: application/json'
+        accept: 'application/json',
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
-      expect(response.body).to.be.an('object'); // Ensure the response body is an object
+      expect(response.body).to.be.an('object'); 
     });
   });
 
@@ -28,29 +28,29 @@ describe('Store API Tests', () => {
       method: 'POST',
       url: '/store/order',
       headers: {
-        accept: 'application/json', // Header for accepting JSON
-        'Content-Type': 'application/json', // Header for sending JSON
+        accept: 'application/json',
+        'Content-Type': 'application/json', 
       },
       body: order,
     }).then((response) => {
       expect(response.status).to.eq(200);
-      expect(response.body).to.have.property('id', order.id); // Check order id
-      expect(response.body).to.have.property('status', order.status); // Check order status
+      expect(response.body).to.have.property('id', order.id);
+      expect(response.body).to.have.property('status', order.status);
     });
   });
 
   // Step 3: GET - Get the order by ID
   it('GET - Get order by ID', () => {
-    const orderId = 9; // Example order ID to fetch
+    const orderId = 9;
     cy.api({
       method: 'GET',
       url: `/store/order/${orderId}`,
       headers: {
-        accept: 'application/json', // Header for accepting JSON
+        accept: 'application/json',
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
-      expect(response.body).to.have.property('id', orderId); // Check the order ID
+      expect(response.body).to.have.property('id', orderId);
     });
   });
 
